@@ -1,0 +1,41 @@
+{
+  // Visit https://aka.ms/tsconfig to read more about this file
+  "compilerOptions": {
+    // Directory
+    "rootDir": "./src",
+    "outDir": "./dist/html",
+    // Modules
+    "module": "esnext",
+    "target": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    // Vite
+    "types": ["vite/client"],
+    "isolatedModules": true,
+    // Build Output
+    "sourceMap": false,
+    "declaration": false,
+    "declarationMap": false,
+    // Path resolution
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["*"],
+      "@styles/*": ["styles/*"],
+      "@pages/*": ["pages/*"],
+      "@my-site/shared/*": ["../shared/dist/*"],
+    },
+    // React integration
+    "jsx": "react-jsx",
+    // Type safety
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "strict": true,
+    // Module Options
+    "verbatimModuleSyntax": false,
+    "noUncheckedSideEffectImports": true,
+    "moduleDetection": "force",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+  },
+  "include": ["src/**/*"]
+}
