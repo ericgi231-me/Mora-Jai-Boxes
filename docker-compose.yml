@@ -1,0 +1,16 @@
+services:
+  frontend:
+    build: 
+      context: ./packages/frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+    container_name: mora-jai-frontend
+
+# Optional: Add a network for future expansion
+networks:
+  default:
+    name: mora-jai-network
