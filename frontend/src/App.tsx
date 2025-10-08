@@ -1,35 +1,62 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import { GridContainer } from "./App.styles.tsx";
+import { MORA_JAI_BOXES, type MoraJaiBox } from "./boxes.tsx";
+import { Menu, Game } from './components';
 
-function App() {
-  const [count, setCount] = useState(0)
+const MoraJaiPage = {
+  Menu: "menu",
+  Game: "game",
+  Editor: "editor"
+} as const;
+type MoraJaiPage = (typeof MoraJaiPage)[keyof typeof MoraJaiPage];
+
+const MoraJai = () => {
+  const [page, setPage] = useState<MoraJaiPage>(MoraJaiPage.Menu);
+  const [selectedBox, setSelectedBox] = useState<MoraJaiBox>(MORA_JAI_BOXES[0]!.boxes[0]!);
+
+  useEffect(() => {
+    const onPopState = () => {
+      if (page === MoraJaiPage.Game) {
+        setPage(MoraJaiPage.Menu);
+      }
+    };
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+  }, [page]);
+
+  const renderCurrentPage = () => {
+    switch (page) {
+      case MoraJaiPage.Menu:
+        return (
+          <Menu 
+            onLevelSelected={(box: MoraJaiBox) => {
+              setSelectedBox(box);
+              setPage(MoraJaiPage.Game);
+              window.history.pushState({ moraJai: "game" }, "Mora Jai Game");
+            }} 
+            onCreateLevel={() => setPage(MoraJaiPage.Editor)} 
+          />
+        );
+      case MoraJaiPage.Game:
+        return (
+          <Game 
+            onBack={() => setPage(MoraJaiPage.Menu)} 
+            box={selectedBox} 
+          />
+        );
+      default:
+        return null;
+    }
+  };
+
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <GridContainer>
+      {renderCurrentPage()}
+    </GridContainer>
+  );
+};
 
-export default App
+//TODO add custom levels
+
+export default MoraJai;
