@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:frontend": "npm run -w frontend dev",
+    "build:frontend": "npm run -w frontend build",
+    "start:frontend": "npm run -w frontend preview"
+  }
+}
