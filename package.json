@@ -1,19 +1,19 @@
 {
   "private": true,
   "scripts": {
-    "dev:frontend": "npm run dev --prefix packages/frontend",
-    "build:frontend": "npm run build --prefix packages/frontend",
-    "start:frontend": "npm run preview --prefix packages/frontend",
-    "test:frontend": "npm test --prefix packages/frontend",
-    "install:frontend": "npm install --prefix packages/frontend",
+    "dev": "npm run dev --prefix packages/frontend",
+    "build": "npm run build --prefix packages/frontend",
+    "start": "npm run preview --prefix packages/frontend",
+    "test": "npm test --prefix packages/frontend",
+    "install": "npm install --prefix packages/frontend",
 
     "clean": "rimraf packages/*/node_modules packages/*/dist",
 
-    "lint:frontend": "npm run lint --prefix packages/frontend",
+    "lint": "npm run lint --prefix packages/frontend",
 
-    "docker:build": "docker-compose build",
-    "docker:up": "docker-compose up -d",
-    "docker:down": "docker-compose down"
+    "docker:build": "docker compose build",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down"
   },
   "devDependencies": {
     "concurrently": "^7.6.0",
