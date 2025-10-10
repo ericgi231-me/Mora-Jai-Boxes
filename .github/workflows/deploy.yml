@@ -28,7 +28,7 @@ env:
   # Server info
   SERVER_HOST: ${{ secrets.SERVER_HOST }}
   SERVER_USER: ${{ secrets.SERVER_USER }}
-  SERVER_KEY: ${{ secrets.SERVER_KEY }}
+  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
   # Environment
   NODE_ENV: production
 
@@ -76,7 +76,7 @@ jobs:
         with:
           host: ${{ env.SERVER_HOST }}
           username: ${{ env.SERVER_USER }}
-          key: ${{ env.SERVER_KEY }}
+          key: ${{ env.SSH_PRIVATE_KEY }}
           port: 22
           source: "app-images.tar.gz,docker-compose.yml"
           target: "/opt/${{ env.APP_NAME }}/"
@@ -86,7 +86,7 @@ jobs:
         with:
           host: ${{ env.SERVER_HOST }}
           username: ${{ env.SERVER_USER }}
-          key: ${{ env.SERVER_KEY }}
+          key: ${{ env.SSH_PRIVATE_KEY }}
           port: 22
           script: |
             cd /opt/${{ env.APP_NAME }}
@@ -118,7 +118,7 @@ jobs:
         with:
           host: ${{ env.SERVER_HOST }}
           username: ${{ env.SERVER_USER }}
-          key: ${{ env.SERVER_KEY }}
+          key: ${{ env.SSH_PRIVATE_KEY }}
           port: 22
           script: |
             cd /opt/${{ env.APP_NAME }}
