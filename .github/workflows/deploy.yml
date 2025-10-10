@@ -82,7 +82,7 @@ jobs:
             echo "SSH connection successful!"
             whoami
             pwd
-            ls -la /var/ww/
+            ls -la /var/www/
           
       - name: Copy files to prod server
         uses: appleboy/scp-action@v1.0.0
@@ -92,7 +92,7 @@ jobs:
           key: ${{ env.SSH_PRIVATE_KEY }}
           port: 22
           source: "app-images.tar.gz,docker-compose.yml"
-          target: "/var/ww/${{ env.APP_NAME }}/"
+          target: "/var/www/${{ env.APP_NAME }}/"
 
       - name: Deploy on prod server
         uses: appleboy/ssh-action@v1.0.0
@@ -102,7 +102,7 @@ jobs:
           key: ${{ env.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            cd /var/ww/${{ env.APP_NAME }}
+            cd /var/www/${{ env.APP_NAME }}
             
             # Load images if any were built
             if [ -s app-images.tar.gz ]; then
@@ -134,7 +134,7 @@ jobs:
           key: ${{ env.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            cd /var/ww/${{ env.APP_NAME }}
+            cd /var/www/${{ env.APP_NAME }}
             
             # Check if frontend container is running (if configured)
             if [ ! -z "${{ env.FRONTEND_PORT }}" ]; then
