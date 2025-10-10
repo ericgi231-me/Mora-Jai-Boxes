@@ -6,7 +6,7 @@
     "start:frontend": "npm run preview --prefix packages/frontend",
     "test:frontend": "npm test --prefix packages/frontend",
     "install:frontend": "npm install --prefix packages/frontend",
-    
+
     "clean": "rimraf packages/*/node_modules packages/*/dist",
 
     "lint:frontend": "npm run lint --prefix packages/frontend",

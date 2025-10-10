@@ -1,16 +1,19 @@
 services:
   frontend:
+    # Use image if available, otherwise build
+    image: ${MORA_JAI_IMAGE:-}
     build: 
       context: ./packages/frontend
       dockerfile: Dockerfile
     ports:
-      - "3000:80"
+      - "${MORA_JAI_PORT:-3000}:${MORA_JAI_INTERNAL_PORT:-80}"
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=${NODE_ENV:-production}
     restart: unless-stopped
-    container_name: mora-jai-frontend
-
-# Optional: Add a network for future expansion
-networks:
-  default:
-    name: mora-jai-network
+    container_name: ${MORA_JAI_FRONTEND_CONTAINER:-mora-jai-frontend}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:${MORA_JAI_INTERNAL_PORT:-80}"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
