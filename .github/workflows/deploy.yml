@@ -70,9 +70,22 @@ jobs:
             echo "No images to build - creating empty archive"
             tar -czf app-images.tar.gz --files-from /dev/null
           fi
+
+      - name: Test SSH connection
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ env.SERVER_HOST }}
+          username: ${{ env.SERVER_USER }}
+          key: ${{ env.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            echo "SSH connection successful!"
+            whoami
+            pwd
+            ls -la /opt/
           
       - name: Copy files to prod server
-        uses: appleboy/scp-action@v0.1.4
+        uses: appleboy/scp-action@v1.0.0
         with:
           host: ${{ env.SERVER_HOST }}
           username: ${{ env.SERVER_USER }}
