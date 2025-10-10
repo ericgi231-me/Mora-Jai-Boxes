@@ -110,10 +110,10 @@ jobs:
             fi
             
             # Stop existing containers
-            docker-compose down || true
+            docker compose down || true
             
             # Start all services defined in docker-compose.yml
-            docker-compose up -d
+            docker compose up -d
             
             # Clean up old images
             docker image prune -f
