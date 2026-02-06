@@ -35,6 +35,7 @@ function applyShade(hex: string, amount: number) {
   return `rgba(${to(0)},${to(1)},${to(2)},1)`;
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useLocalStorageState<T>(key: string, defaultValue: T) {
   const [value, setValue] = useState<T>(() => {
     const stored = localStorage.getItem(key);
@@ -56,6 +57,7 @@ export function useLocalStorageState<T>(key: string, defaultValue: T) {
  * @param border If true, adds a border to the SVG.
  * @returns A CSS string for the background pattern.
  */
+// eslint-disable-next-line react-refresh/only-export-components
 export const realmPattern = (realm: Realm, baseColor: string, shade: number, border = false) => {
   const color = applyShade(baseColor, shade);
   const css: string[] = [];
@@ -196,6 +198,7 @@ export const realmPattern = (realm: Realm, baseColor: string, shade: number, bor
   return css.join(' ').replace(/\s+/g, ' ');
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function handleButtonAction(
   color: Realm, 
   buttonIndex: number, 
@@ -372,6 +375,7 @@ const handleOrange = (
   }
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const handleWhite = (
   buttons: Realm[],
   buttonIndex: number,
