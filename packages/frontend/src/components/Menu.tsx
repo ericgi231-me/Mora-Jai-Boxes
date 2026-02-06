@@ -46,6 +46,7 @@ const Menu: React.FC<MoraJaiMenuProps> = ({ onLevelSelected, onCreateLevel }) =>
         {accessibleMode ? "Accessible: On" : "Accessible: Off"}
       </AccessibleToggleButton>
       <MenuTitle>Mora Jai Boxes Online</MenuTitle>
+      <p style={{ color: "red" }}>Warning: I am moving houses, the site may go down unexpectedly.</p>
       <MenuDescription>
         The magnificent puzzle game Blue Prince by Dogubomb contains many a secret and convoluted puzzle.<br />
         Among them are the clear and concise Mora Jai boxes which require no explanation.<br />
