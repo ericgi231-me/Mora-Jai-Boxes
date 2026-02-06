@@ -13,6 +13,8 @@ permissions:
 
 env:
   REGISTRY: ghcr.io
+  FRONTEND_IMAGE: ghcr.io/ericgi231-me/mora-jai-boxes/frontend:${{ github.sha }}
+  APP_NAME: mora-jai-boxes
 
 jobs:
   build-frontend:
@@ -20,11 +22,6 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main') }}
     steps:
-      - name: Set lowercase image and app name
-        run: |
-          echo "FRONTEND_IMAGE=ghcr.io/${GITHUB_REPOSITORY,,}/frontend:${GITHUB_SHA}" >> $GITHUB_ENV
-          echo "APP_NAME=${GITHUB_REPOSITORY##*/}" | tr '[:upper:]' '[:lower:]' >> $GITHUB_ENV
-      
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -42,7 +39,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./packages/frontend/Dockerfile
+          file: ./packages/react/Dockerfile
           push: true
           tags: ${{ env.FRONTEND_IMAGE }}
           cache-from: type=gha
@@ -54,11 +51,6 @@ jobs:
     if: ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main') }}
     needs: [build-frontend]
     steps:
-      - name: Set lowercase image and app name
-        run: |
-          echo "FRONTEND_IMAGE=ghcr.io/${GITHUB_REPOSITORY,,}/frontend:${GITHUB_SHA}" >> $GITHUB_ENV
-          echo "APP_NAME=${GITHUB_REPOSITORY##*/}" | tr '[:upper:]' '[:lower:]' >> $GITHUB_ENV
-
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -74,6 +66,9 @@ jobs:
 
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.3
+        env:
+          FRONTEND_IMAGE: ${{ env.FRONTEND_IMAGE }}
+          APP_NAME: ${{ env.APP_NAME }}
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
