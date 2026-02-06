@@ -13,8 +13,6 @@ permissions:
 
 env:
   REGISTRY: ghcr.io
-  FRONTEND_IMAGE: ghcr.io/${{ github.repository }}/frontend:${{ github.sha }}
-  APP_NAME: ${{ github.event.repository.name }}
 
 jobs:
   build-frontend:
@@ -22,6 +20,11 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main') }}
     steps:
+      - name: Set lowercase image and app name
+        run: |
+          echo "FRONTEND_IMAGE=ghcr.io/${GITHUB_REPOSITORY,,}/frontend:${GITHUB_SHA}" >> $GITHUB_ENV
+          echo "APP_NAME=${GITHUB_REPOSITORY##*/}" | tr '[:upper:]' '[:lower:]' >> $GITHUB_ENV
+      
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -51,6 +54,11 @@ jobs:
     if: ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main') }}
     needs: [build-frontend]
     steps:
+      - name: Set lowercase image and app name
+        run: |
+          echo "FRONTEND_IMAGE=ghcr.io/${GITHUB_REPOSITORY,,}/frontend:${GITHUB_SHA}" >> $GITHUB_ENV
+          echo "APP_NAME=${GITHUB_REPOSITORY##*/}" | tr '[:upper:]' '[:lower:]' >> $GITHUB_ENV
+
       - name: Checkout code
         uses: actions/checkout@v4
 
