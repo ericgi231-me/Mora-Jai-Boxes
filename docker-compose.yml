@@ -10,7 +10,7 @@ services:
     networks:
       web:
         aliases:
-          - ${APP_NAME:?need APP_NAME}
+          - ${APP_NAME:-mora-jai-boxes}
 
 networks:
   web:
