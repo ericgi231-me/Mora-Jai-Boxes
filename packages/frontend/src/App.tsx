@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { GridContainer } from "./App.styles.tsx";
 import { MORA_JAI_BOXES, type MoraJaiBox } from "./boxes.tsx";
 import { Menu, Game } from './components';
+import ReactGA from "react-ga4";
+
+ReactGA.initialize("G-VTTP7LRNBH");
 
 const MoraJaiPage = {
   Menu: "menu",
@@ -11,6 +15,12 @@ const MoraJaiPage = {
 type MoraJaiPage = (typeof MoraJaiPage)[keyof typeof MoraJaiPage];
 
 const MoraJai = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    ReactGA.send({ hitType: "pageview", page: location.pathname });
+  }, [location]);
+
   const [page, setPage] = useState<MoraJaiPage>(MoraJaiPage.Menu);
   const [selectedBox, setSelectedBox] = useState<MoraJaiBox>(MORA_JAI_BOXES[0]!.boxes[0]!);
 
