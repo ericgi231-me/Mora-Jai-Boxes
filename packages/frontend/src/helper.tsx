@@ -403,13 +403,15 @@ export const handleWhite = (
     })
     .filter((idx): idx is number => idx !== null);
 
+  const tileColor = buttons[buttonIndex]!;
+
   setButtons(prev => {
     const copy = [...prev];
     copy[buttonIndex] = Realm.Grey;
     neighbors.forEach(idx => {
       if (prev[idx] === Realm.Grey) {
-        copy[idx] = buttons[buttonIndex]!;
-      } else if (prev[idx] === Realm.White) {
+        copy[idx] = tileColor;
+      } else if (prev[idx] === tileColor) {
         copy[idx] = Realm.Grey;
       }
     });
