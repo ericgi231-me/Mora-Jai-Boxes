@@ -351,8 +351,8 @@ const RAW_MORA_JAI_BOXES: MoraJaiBoxGroup[] = [
         Realm.Orange, Realm.Blue, Realm.Orange
       ], corners: Array(4).fill(Realm.Violet) },
       { name: "Gallery", id: '', grid: [
-        Realm.Grey, Realm.Yellow, Realm.Grey,
-        Realm.Black, Realm.Blue, Realm.Black,
+        Realm.Grey, Realm.Black, Realm.Grey,
+        Realm.Yellow, Realm.Blue, Realm.Yellow,
         Realm.Blue, Realm.Blue, Realm.Blue
       ], corners: Array(4).fill(Realm.Blue) },
       { name: "Library", id: '', grid: [
